@@ -1,0 +1,18 @@
+{
+    "cmake.sourceDirectory": "${workspaceFolder}/demo",
+    "cmake.buildDirectory": "${workspaceFolder}/build/demo",
+    "C_Cpp.default.configurationProvider": "ms-vscode.cmake-tools",
+    "cmake.configureSettings": {
+        "gmlib_DIR": "C:\\Code\\applied-geometry\\build\\gmlib\\cmake",
+        "Qt5Gui_DIR": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Gui",
+        "Qt5Core_DIR": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Core",
+        "Qt5Quick_DIR": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Quick",
+        "CMAKE_TOOLCHAIN_FILE": "C:/vcpkg/scripts/buildsystems/vcpkg.cmake",
+        // "CMAKE_PREFIX_PATH": "C:\\Code\\applied-geometry\\gmlib\\cmake"
+    },
+    // "cmake.toolset": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake"
+    // "cmake.configureArgs": [
+    //     // "-Dgmlib_DIR=C:\\Code\\applied-geometry\\gmlib\\cmake"
+    //     "-Dgmlib_DIR=C:/Code/applied-geometry/gmlib/cmake"
+    // ]
+}

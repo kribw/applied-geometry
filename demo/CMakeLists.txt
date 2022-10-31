@@ -27,6 +27,16 @@ endif()
 
 ####################
 # Configure gmlib2qt
+# set(gmlib_DIR "${CMAKE_SOURCE_DIR}/../gmlib/" CACHE PATH "" FORCE)
+# set(gmlib_DIR "${CMAKE_SOURCE_DIR}/../gmlib/")
+# set(gmlib_DIR "C:/Code/applied-geometry/gmlib")
+#if(EXISTS ${gmlib_DIR})
+#    message("Found GMlib at: " ${gmlib_DIR}) 
+#endif()
+# set(gmlib_DIR "C:/Code/applied-geometry/gmlib/cmake")
+# find_package(gmlib 0.7 REQUIRED PATHS "C:/Code/applied-geometry/gmlib/cmake" NO_DEFAULT_PATH) #NO_DEFAULT_PATH
+# find_package(gmlib 0.7 REQUIRED CONFIG NO_DEFAULT_PATH) #NO_DEFAULT_PATH
+#find_package(gmlib 0.7 REQUIRED CONFIG NO_DEFAULT_PATH) ${CMAKE_SOURCE_DIR}/../gmlib/cmake/
 find_package(gmlib 0.7 REQUIRED CONFIG NO_DEFAULT_PATH)
 target_link_libraries( ${PROJECT_NAME} gmlib::gmlib )
 
