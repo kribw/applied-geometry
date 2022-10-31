@@ -2,8 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\demo",
-    "\\gmlib\\cmake"
+    "\\gmlib",
+    "\\Local settings (.vs)",
+    "\\Local settings (.vs)\\applied-geometry\\v17"
   ],
-  "SelectedNode": "\\demo\\data",
+  "SelectedNode": "\\Global settings (C:\\Users\\Kristoffer\\AppData\\Local\\Microsoft\\VisualStudio\\17.0_bccf7d8d\\OpenFolder)\\CMakeSettings_schema.json",
   "PreviewInSolutionExplorer": false
 }

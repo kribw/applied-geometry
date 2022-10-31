@@ -1,24 +1,35 @@
 ﻿{
   "configurations": [
     {
-      "name": "x64-Debug",
+      "name": "x64-Debug-demo",
       "generator": "Ninja",
       "configurationType": "Debug",
       "inheritEnvironments": [ "msvc_x64_x64" ],
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "-DCMAKE_TOOLCHAIN_FILE=C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
-      "buildCommandArgs": "-DCMAKE_TOOLCHAIN_FILE=C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+      "buildRoot": "${projectDir}\\build\\${name}",
+      "installRoot": "${projectDir}\\build\\install\\${name}",
+      "cmakeToolchain": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "variables": [
         {
           "name": "gmlib_DIR",
-          "value": "C:\\Code\\applied-geometry\\gmlib\\out\\build\\x64-Debug\\cmake",
+          "value": "${projectDir}\\..\\gmlib\\build\\x64-Debug\\cmake",
           "type": "PATH"
         },
         {
-          "name": "gmlib_TEST",
-          "value": "C:/Code/applied-geometry/gmlib/cmake/",
+          "name": "Qt5Core_DIR",
+          "value": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Core",
+          "type": "PATH"
+        },
+        {
+          "name": "Qt5Quick_DIR",
+          "value": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Quick",
+          "type": "PATH"
+        },
+        {
+          "name": "Qt5Gui_DIR",
+          "value": "C:\\Qt\\Qt5.12.12\\5.12.12\\mingw73_64\\lib\\cmake\\Qt5Gui",
           "type": "PATH"
         }
       ]
