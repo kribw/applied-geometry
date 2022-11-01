@@ -9,4 +9,5 @@
         "Qt5Quick_DIR": "C:\\Qt\\Qt5.12.12\\5.12.12\\msvc2017_64\\lib\\cmake\\Qt5Quick",
         "CMAKE_TOOLCHAIN_FILE": "C:\\vcpkg\\scripts\\buildsystems\\vcpkg.cmake",
     },
+    "C_Cpp.errorSquiggles": "Enabled",
 }
