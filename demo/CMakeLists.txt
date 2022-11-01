@@ -113,6 +113,8 @@ qt5_wrap_cpp( HDRS_MOC
   application/node.h
   application/femobject.h
 
+  applied_geometry/bspline.h
+
   scenario.h
   )
 target_sources( ${PROJECT_NAME} PRIVATE ${HDRS_MOC})
