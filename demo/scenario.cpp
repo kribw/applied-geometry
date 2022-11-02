@@ -113,9 +113,9 @@ void Scenario::initializeScenario()
     GMlib::DVector<float> vec    = GMlib::DVector<float>(m);
     auto                  delta  = circle.getParDelta() / m - 1;
 
-    for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
+    //for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
         //        vec[i] = circle.get
-    }
+    //}
 }
 
 void Scenario::cleanupScenario() {}
