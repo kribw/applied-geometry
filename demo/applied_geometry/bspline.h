@@ -42,9 +42,11 @@ namespace kwi
         std::vector<T>                          _t;   // knot vector
 
       private:
+        T    getDeltaP() const;
         void create_knot_vector(int n);
         T    get_w(int d, int i, T t) const;
         int  get_i(T t) const;
+        int  get_basis(T t, T& p1, T& p2, T& p3) const;
 
     };   // END class PCircle
 

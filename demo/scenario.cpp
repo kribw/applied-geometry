@@ -69,53 +69,56 @@ void Scenario::initializeScenario()
     GMlib::Material mm(GMlib::GMmaterial::polishedBronze());
     mm.set(45.0);
 
-    // Instantiate FEMObject and run demo
-    //  _femObject = new FEMObject();
-    //  _femObject->toggleDefaultVisualizer();
-    //  _femObject->demoRandom();
-    //  this->scene()->insert(_femObject);
-    GMlib::DVector<GMlib::Vector<float, 3>> points
-      = GMlib::DVector<GMlib::Vector<float, 3>>();
-    GMlib::Vector<float, 3> p = GMlib::Vector<float, 3>();
 
-    const float scale = 1.0;
 
-    p = (0.0, 0.0, 0.0);
-    points.push_back(GMlib::Vector<float, 3>(0.0, 0.0, 0.0));
+    //    GMlib::DVector<GMlib::Vector<float, 3>> points;
+    //    GMlib::Vector<float, 3>                 p;
+    //    const float                             scale = 1.0;
 
-    p = {1.0 * scale, 1.0 * scale, 1.0};
-    points.push_back(p);
+    //    p = (0.0, 0.0, 0.0);
+    //    points.push_back(p);
 
-    p = {2.0 * scale, 0.0, 2.0};
-    points.push_back(p);
+    //    p = {1.0 * scale, 1.0 * scale, 1.0};
+    //    points.push_back(p);
 
-    p = {3.0 * scale, 1.0 * scale, 3.0};
-    points.push_back(p);
+    //    p = {2.0 * scale, 0.0, 2.0};
+    //    points.push_back(p);
 
-    p = {4.0 * scale, 0.0, 0.0};
-    points.push_back(p);
+    //    p = {3.0 * scale, 1.0 * scale, 3.0};
+    //    points.push_back(p);
 
-    p = {5.0 * scale, 3.0 * scale, 0.0};
-    points.push_back(p);
+    //    p = {4.0 * scale, 0.0, 0.0};
+    //    points.push_back(p);
 
-    std::cout << points << std::endl;
+    //    p = {5.0 * scale, 3.0 * scale, 0.0};
+    //    points.push_back(p);
 
-    auto bspline = new kwi::BSpline<float>(points);
+    //    std::cout << points << std::endl;
+
+    //    auto bspline = new kwi::BSpline<float>(points);
+    //    bspline->toggleDefaultVisualizer();
+    //    bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
+    //    bspline->sample(50, 0);
+    //    this->scene()->insert(bspline);
+
+    //     Use circle to approx points
+    auto const m      = 30;
+    auto       circle = new GMlib::PCircle<float>(2.0);
+    auto       p      = GMlib::DVector<GMlib::Vector<float, 3>>(m);
+    auto       delta  = circle->getParDelta() / (m - 1);
+
+    for (int i = 0; i < m; ++i) {
+        p[i] = circle->getPosition(circle->getParStart() + i * delta);
+    }
+    auto bspline = new kwi::BSpline<float>(p, 6);
     bspline->toggleDefaultVisualizer();
     bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
     bspline->sample(50, 0);
     this->scene()->insert(bspline);
-
-
-    // Use circle to approx points
-    auto const            m      = 30;
-    auto                  circle = GMlib::PCircle<float>(2.0);
-    GMlib::DVector<float> vec    = GMlib::DVector<float>(m);
-    auto                  delta  = circle.getParDelta() / m - 1;
-
-    for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
-        //        vec[i] = circle.get
-    }
+    //    std::cout << "delta: " << delta << std::endl;
+    //    std::cout << "start: " << circle.getParStart() << std::endl;
+    //    std::cout << "end: " << circle.getParEnd() << std::endl;
+    //    std::cout << "p: " << p << std::endl;
 }
 
 void Scenario::cleanupScenario() {}
