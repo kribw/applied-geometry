@@ -119,6 +119,9 @@ void Scenario::initializeScenario()
     //    std::cout << "start: " << circle.getParStart() << std::endl;
     //    std::cout << "end: " << circle.getParEnd() << std::endl;
     //    std::cout << "p: " << p << std::endl;
+    //for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
+        //        vec[i] = circle.get
+    //}
 }
 
 void Scenario::cleanupScenario() {}
