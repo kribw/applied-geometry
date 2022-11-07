@@ -3,10 +3,10 @@
 
 #include "../../gmlib/modules/parametrics/gmpcurve.h"
 
-//#include "../../gmlib/modules/core/types/gmangle.h"
-
 // stl
 #include <vector>
+
+using namespace GMlib;
 
 namespace kwi
 {
@@ -16,8 +16,8 @@ namespace kwi
 
       public:
         BSpline();
-        BSpline(const GMlib::DVector<GMlib::Vector<T, 3>>& c);
-        BSpline(const GMlib::DVector<GMlib::Vector<T, 3>>& p, int n);
+        BSpline(const DVector<Vector<T, 3>>& c);
+        BSpline(const DVector<Vector<T, 3>>& p, int n);
         virtual ~BSpline();
 
         //****************************************
@@ -36,18 +36,19 @@ namespace kwi
         T _rx;
         T _ry;
 
-        int                                     _d;   // dimension
-        int                                     _k;   // order
-        GMlib::DVector<GMlib::Vector<float, 3>> _c;   // control points
-        std::vector<T>                          _t;   // knot vector
+        int                       _d;   // dimension
+        int                       _k;   // order
+        DVector<Vector<float, 3>> _c;   // control points
+        std::vector<T>            _t;   // knot vector
 
       private:
         T    getDeltaP() const;
-        void create_knot_vector(int n);
-        T    get_w(int d, int i, T t) const;
-        int  get_i(T t) const;
-        int  get_basis(T t, T& p1, T& p2, T& p3) const;
-
+        void create_knot_vector(const int n);
+        T    get_w(const int d, const int i, const T t) const;
+        int  get_i(const T t) const;
+        int  get_basis(const T t, T& x, T& y, T& z) const;
+        DVector<Vector<T, 3>>
+        create_control_points(const DVector<Vector<T, 3>>& p, int n) const;
     };   // END class PCircle
 
 }   // namespace kwi

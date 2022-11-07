@@ -22,47 +22,12 @@ namespace kwi
     template <typename T>
     BSpline<T>::BSpline(const DVector<Vector<T, 3>>& p, int n)
     {
-        //        std::cout << "p: " << p << std::endl;
-        // use least square to make n control points - and generate a knotvector
-        // least_square()
         // n = control points
         _c.setDim(n);
-        _d = 2;                  // dimension should always be 2
-        _k = _d + 1;                      // order
-        create_knot_vector(n);   // generate knot vector
-
-
-        // A = n * m
-        // m = p.getdim
-        // n = no. of splines
-        DMatrix<T> A(p.getDim(), n, T(0));
-        T          dt = getDeltaP() / (p.getDim() - 1);
-
-        for (int j = 0; j < p.getDim(); ++j) {
-            T   x, y, z;
-            T   t = getStartP() + j * dt;
-            int i = get_basis(t, x, y, z);
-
-            A[j][i - 2] = x;
-            A[j][i - 1] = y;
-            A[j][i]     = z;
-        }
-        std::cout << "A: " << std::endl;
-
-        qDebug() << A;
-
-
-        DMatrix<T> A_T = A;
-        A_T.transpose();
-        const DMatrix<T>            B     = A_T * A;
-        const DVector<Vector<T, 3>> b     = A_T * p;
-        auto                        B_inv = B;
-        B_inv.invert();
-
-
-        // A_transposed * A * _c = A_transposed * p
-        // B c = b
-        _c = B_inv * b;
+        _d = 2;                             // dimension should always be 2
+        _k = _d + 1;                        // order
+        create_knot_vector(n);              // generate knot vector
+        _c = create_control_points(p, n);   // least square
     }
 
     template <typename T>
@@ -71,7 +36,7 @@ namespace kwi
     }
 
     template <typename T>
-    bool BSpline<T>::isClosed() const
+    inline bool BSpline<T>::isClosed() const
     {
         return false;
     }
@@ -88,8 +53,8 @@ namespace kwi
 
         // Only compute position
         // dont need any derivatives
-        T   x, y, z;
-        int i       = get_basis(t, x, y, z);
+        T         x, y, z;
+        const int i = get_basis(t, x, y, z);
         this->_p[0] = x * _c[i - 2] + y * _c[i - 1] + z * _c[i];
     }
 
@@ -116,7 +81,7 @@ namespace kwi
     }
 
     template <typename T>
-    void BSpline<T>::create_knot_vector(int n)
+    inline void BSpline<T>::create_knot_vector(const int n)
     {
         // n = no. control points.
         // n values in knot vector should
@@ -139,15 +104,47 @@ namespace kwi
     }
 
     template <typename T>
-    inline T BSpline<T>::get_w(int d, int i, T t) const
+    DVector<Vector<T, 3>>
+    BSpline<T>::create_control_points(const DVector<Vector<T, 3>>& p,
+                                      int                          n) const
+    {
+        // A = n * m
+        // m = p.getdim
+        // n = no. of splines
+        DMatrix<T> A(p.getDim(), n, T(0));
+        const T    dt = getDeltaP() / (p.getDim() - 1);
+
+        for (int j = 0; j < p.getDim(); ++j) {
+            T         x, y, z;
+            const T   t = getStartP() + j * dt;
+            const int i = get_basis(t, x, y, z);
+
+            A[j][i - 2] = x;
+            A[j][i - 1] = y;
+            A[j][i]     = z;
+        }
+        qDebug() << A;
+
+        DMatrix<T> A_T = A;
+        A_T.transpose();
+        const DMatrix<T>            B     = A_T * A;
+        const DVector<Vector<T, 3>> b     = A_T * p;
+        auto                        B_inv = B;
+        B_inv.invert();
+
+        return B_inv * b;
+    }
+
+    template <typename T>
+    inline T BSpline<T>::get_w(const int d, const int i, const T t) const
     {
         return (t - _t[i]) / (_t[i + d] - _t[i]);
     }
 
     template <typename T>
-    inline int BSpline<T>::get_i(T t) const
+    inline int BSpline<T>::get_i(const T t) const
     {
-        int n = _c.getDim();
+        const int n = _c.getDim();
         for (int i = _d; i < n; ++i) {
             if (t <= _t[i + 1]) return i;
         }
@@ -156,7 +153,7 @@ namespace kwi
 
 
     template <typename T>
-    inline int BSpline<T>::get_basis(T t, T& x, T& y, T& z) const
+    int BSpline<T>::get_basis(const T t, T& x, T& y, T& z) const
     {
         const int i = get_i(t);
 
