@@ -75,12 +75,6 @@ namespace kwi
     // *************************
 
     template <typename T>
-    inline T BSpline<T>::getDeltaP() const
-    {
-        return getEndP() - getStartP();
-    }
-
-    template <typename T>
     inline void BSpline<T>::create_knot_vector(const int n)
     {
         // n = no. control points.
@@ -101,6 +95,8 @@ namespace kwi
         for (int i = n; i < n + _k; ++i) {
             _t[i] = _t[n - 1] + 1;
         }
+
+        qDebug() << _t;
     }
 
     template <typename T>
@@ -112,11 +108,11 @@ namespace kwi
         // m = p.getdim
         // n = no. of splines
         DMatrix<T> A(p.getDim(), n, T(0));
-        const T    dt = getDeltaP() / (p.getDim() - 1);
+        const T    dt = getParDelta() / (p.getDim() - 1);
 
         for (int j = 0; j < p.getDim(); ++j) {
             T         x, y, z;
-            const T   t = getStartP() + j * dt;
+            const T   t = getParStart() + j * dt;
             const int i = get_basis(t, x, y, z);
 
             A[j][i - 2] = x;

@@ -11,14 +11,14 @@ using namespace GMlib;
 namespace kwi
 {
     template <typename T>
-    class BSpline : public PCurve<T, 3> {
-        GM_SCENEOBJECT(BSpline)
+    class LaneRiesenfeld : public PCurve<T, 3> {
+        GM_SCENEOBJECT(LaneRiesenfeld)
 
       public:
-        BSpline();
-        BSpline(const DVector<Vector<T, 3>>& c);
-        BSpline(const DVector<Vector<T, 3>>& p, int n);
-        virtual ~BSpline();
+        LaneRiesenfeld();
+        LaneRiesenfeld(const DVector<Vector<T, 3>>& c);
+        LaneRiesenfeld(const DVector<Vector<T, 3>>& p, int n);
+        virtual ~LaneRiesenfeld();
 
         //****************************************
         //****** Virtual public functions   ******
@@ -32,18 +32,20 @@ namespace kwi
         T    getStartP() const override;
         T    getEndP() const override;
 
+        // Protected data for the curve
+        T _rx;
+        T _ry;
+
         int                       _d;   // dimension
         int                       _k;   // order
         DVector<Vector<float, 3>> _c;   // control points
         std::vector<T>            _t;   // knot vector
 
       private:
-        void create_knot_vector(const int n);
-        T    get_w(const int d, const int i, const T t) const;
-        int  get_i(const T t) const;
-        int  get_basis(const T t, T& x, T& y, T& z) const;
-        DVector<Vector<T, 3>>
-        create_control_points(const DVector<Vector<T, 3>>& p, int n) const;
+        T    getDeltaP() const;
+        DVector<Vector<float, 3>> lane_riesenfeld_closed(DVector<Vector<float, 3>> p, int k, int d);
+        int double_part(DVector<Vector<float, 3>> p, int n);
+        void smooth_part_closed(DVector<Vector<float, 3>> p, int n, int d);
     };   // END class PCircle
 
 }   // namespace kwi

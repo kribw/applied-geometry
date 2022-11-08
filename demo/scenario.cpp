@@ -104,13 +104,17 @@ void Scenario::initializeScenario()
     //     Use circle to approx points
     auto const m      = 30;
     auto       circle = new GMlib::PCircle<float>(2.0);
-    auto       p      = GMlib::DVector<GMlib::Vector<float, 3>>(m);
-    auto       delta  = circle->getParDelta() / (m - 1);
+    circle->toggleDefaultVisualizer();
+    circle->sample(50, 0);
+    this->scene()->insert(circle);
+
+    auto p     = GMlib::DVector<GMlib::Vector<float, 3>>(m);
+    auto delta = circle->getParDelta() / (m - 1);
 
     for (int i = 0; i < m; ++i) {
         p[i] = circle->getPosition(circle->getParStart() + i * delta);
     }
-    auto bspline = new kwi::BSpline<float>(p, 6);
+    auto bspline = new kwi::BSpline<float>(p, 20);
     bspline->toggleDefaultVisualizer();
     bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
     bspline->sample(50, 0);
@@ -119,8 +123,8 @@ void Scenario::initializeScenario()
     //    std::cout << "start: " << circle.getParStart() << std::endl;
     //    std::cout << "end: " << circle.getParEnd() << std::endl;
     //    std::cout << "p: " << p << std::endl;
-    //for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
-        //        vec[i] = circle.get
+    // for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
+    //        vec[i] = circle.get
     //}
 }
 

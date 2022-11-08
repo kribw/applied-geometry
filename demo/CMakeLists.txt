@@ -114,6 +114,7 @@ qt5_wrap_cpp( HDRS_MOC
   application/femobject.h
 
   applied_geometry/bspline.h
+  applied_geometry/laneriesenfeld.h
 
   scenario.h
   )
