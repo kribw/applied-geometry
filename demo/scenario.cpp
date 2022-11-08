@@ -16,6 +16,10 @@
 
 // applied_geometry
 #include "applied_geometry/bspline.h"
+#include "applied_geometry/closedsubdivcurve.h"
+
+// stl
+#include <cmath>
 
 template <typename T>
 inline std::ostream& operator<<(std::ostream& out, const std::vector<T>& v)
@@ -119,6 +123,11 @@ void Scenario::initializeScenario()
     bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
     bspline->sample(50, 0);
     this->scene()->insert(bspline);
+    qDebug() << std::pow(2, 5);
+
+    //    auto closed_curve = new kwi::ClosedSubDivCurve<float>();
+    //    closed_curve->sample(1, 2);
+
     //    std::cout << "delta: " << delta << std::endl;
     //    std::cout << "start: " << circle.getParStart() << std::endl;
     //    std::cout << "end: " << circle.getParEnd() << std::endl;
