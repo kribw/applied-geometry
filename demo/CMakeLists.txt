@@ -24,6 +24,8 @@ if(MSVC AND NOT VCPKG_TOOLCHAIN)
     )
 endif()
 
+set(gmlib_DIR "C:/Code/applied-geometry/build/gmlib/cmake")
+# set(gmlib_DIR "C:/Code/applied-geometry/gmlib") C:/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 ####################
 # Configure gmlib2qt
@@ -112,6 +114,9 @@ qt5_wrap_cpp( HDRS_MOC
   application/window.h
   application/node.h
   application/femobject.h
+
+  applied_geometry/bspline.h
+  applied_geometry/closedsubdivcurve.h
 
   scenario.h
   )
