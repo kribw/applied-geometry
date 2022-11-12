@@ -32,4 +32,6 @@
 *.app
 
 build/
-.vs/applied-geometry/
+.vs/
+
+debug.log
