@@ -17,6 +17,7 @@
 // applied_geometry
 #include "applied_geometry/bspline.h"
 #include "applied_geometry/closedsubdivcurve.h"
+#include "applied_geometry/modelcurve.h"
 
 // stl
 #include <cmath>
@@ -135,6 +136,7 @@ void Scenario::initializeScenario()
     // for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
     //        vec[i] = circle.get
     //}
+    auto model_curve = new kwi::ModelCurve<float>();
 }
 
 void Scenario::cleanupScenario() {}

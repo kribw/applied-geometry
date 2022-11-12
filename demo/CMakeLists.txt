@@ -117,6 +117,7 @@ qt5_wrap_cpp( HDRS_MOC
 
   applied_geometry/bspline.h
   applied_geometry/closedsubdivcurve.h
+  applied_geometry/modelcurve.h
 
   scenario.h
   )
@@ -153,5 +154,4 @@ target_sources( ${PROJECT_NAME} PRIVATE
   application/femobject.cpp
 
   scenario.cpp
-  )
-
+)
