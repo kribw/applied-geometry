@@ -44,12 +44,11 @@ namespace kwi
         int  get_basis(const T t, T& x, T& y, T& z) const;
         DVector<Vector<T, 3>>
         create_control_points(const DVector<Vector<T, 3>>& p, int n) const;
-    };   // END class PCircle
+    };   // END class BSpline
 
 }   // namespace kwi
 
-// Include PCircle class function implementations
-//#include "../../gmlib/modules/parametrics/curves/gmpcircle.c"
+// Include BSpline class function implementations
 #include "bspline.c"
 
 #endif   // KWI_B_SPLINE_H

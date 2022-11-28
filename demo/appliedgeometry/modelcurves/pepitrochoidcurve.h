@@ -1,5 +1,5 @@
-#ifndef KWI_MODEL_CURVE_H
-#define KWI_MODEL_CURVE_H
+#ifndef KWI_P_EPITROCHOID_CURVE_H
+#define KWI_P_EPITROCHOID_CURVE_H
 
 //#include "../../gmlib/modules/parametrics/gmpcurve.h"
 
@@ -14,12 +14,12 @@ using namespace GMlib;
 namespace kwi
 {
     template <typename T>
-    class ModelCurve : public PCurve<T, 3> {
-        GM_SCENEOBJECT(ModelCurve)
+    class PEpitrochoidCurve : public PCurve<T, 3> {
+        GM_SCENEOBJECT(PEpitrochoidCurve)
 
       public:
-        ModelCurve(T a);
-        virtual ~ModelCurve();
+        PEpitrochoidCurve(T a, T b, T c);
+        virtual ~PEpitrochoidCurve();
 
         //****************************************
         //****** Virtual public functions   ******
@@ -35,11 +35,13 @@ namespace kwi
 
       private:
         T _a;
-    };   // END class ModelCurve
+        T _b;
+        T _c;
+    };   // END class PEpitrochoidCurve
 
 }   // namespace kwi
 
-// Include ModelCurve class function implementations
-#include "modelcurve.c"
+// Include PEpitrochoidCurve class function implementations
+#include "pepitrochoidcurve.c"
 
-#endif   // KWI_MODEL_CURVE_H
+#endif   // KWI_P_EPITROCHOID_CURVE_H

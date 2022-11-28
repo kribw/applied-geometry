@@ -1,5 +1,5 @@
-#ifndef KWI_CLOSED_SUB_DIV_CURVE_H
-#define KWI_CLOSED_SUB_DIV_CURVE_H
+#ifndef KWI_P_CLOSED_SUB_DIV_CURVE_H
+#define KWI_P_CLOSED_SUB_DIV_CURVE_H
 
 #include "../../gmlib/modules/parametrics/gmpcurve.h"
 
@@ -12,13 +12,13 @@ using namespace GMlib;
 namespace kwi
 {
     template <typename T>
-    class ClosedSubDivCurve : public PCurve<T, 3> {
-        GM_SCENEOBJECT(ClosedSubDivCurve)
+    class PClosedSubDivCurve : public PCurve<T, 3> {
+        GM_SCENEOBJECT(PClosedSubDivCurve)
 
       public:
-        ClosedSubDivCurve();
-        ClosedSubDivCurve(const DVector<Vector<T, 3>>& p, int d);
-        virtual ~ClosedSubDivCurve();
+        PClosedSubDivCurve();
+        PClosedSubDivCurve(const DVector<Vector<T, 3>>& p, int d);
+        virtual ~PClosedSubDivCurve();
 
         //****************************************
         //****** Virtual public functions   ******
@@ -42,11 +42,11 @@ namespace kwi
         int  doublePart(std::vector<DVector<Vector<T, 3>>>& p, int n) const;
         void smoothPartClosed(std::vector<DVector<Vector<T, 3>>>& p, int n,
                               int d) const;
-    };   // END class PCircle
+    };   // END class PClosedSubDivCurve
 
 }   // namespace kwi
 
-// Include PCircle class function implementations
-#include "closedsubdivcurve.c"
+// Include PClosedSubDivCurve class function implementations
+#include "pclosedsubdivcurve.c"
 
-#endif   // KWI_CLOSED_SUB_DIV_CURVE_H
+#endif   // KWI_P_CLOSED_SUB_DIV_CURVE_H

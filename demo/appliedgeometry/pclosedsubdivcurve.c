@@ -6,7 +6,7 @@ namespace kwi
     using namespace GMlib;
 
     template <typename T>
-    ClosedSubDivCurve<T>::ClosedSubDivCurve(const DVector<Vector<T, 3>>& p,
+    PClosedSubDivCurve<T>::PClosedSubDivCurve(const DVector<Vector<T, 3>>& p,
                                             int                          d)
     {
         _d      = d;
@@ -14,18 +14,18 @@ namespace kwi
     }
 
     template <typename T>
-    ClosedSubDivCurve<T>::~ClosedSubDivCurve()
+    PClosedSubDivCurve<T>::~PClosedSubDivCurve()
     {
     }
 
     template <typename T>
-    inline bool ClosedSubDivCurve<T>::isClosed() const
+    inline bool PClosedSubDivCurve<T>::isClosed() const
     {
         return true;
     }
 
     template <typename T>
-    inline void ClosedSubDivCurve<T>::sample(int depth, int d)
+    inline void PClosedSubDivCurve<T>::sample(int depth, int d)
     {
         // depth = number of times to double points
         // m = no. samples
@@ -46,19 +46,19 @@ namespace kwi
     // *************************
 
     template <typename T>
-    void ClosedSubDivCurve<T>::eval(T t, int d, bool /*l*/) const
+    void PClosedSubDivCurve<T>::eval(T t, int d, bool /*l*/) const
     {
         // Not used, just needs to be declared
     }
 
     template <typename T>
-    inline T ClosedSubDivCurve<T>::getStartP() const
+    inline T PClosedSubDivCurve<T>::getStartP() const
     {
         return 0;
     }
 
     template <typename T>
-    inline T ClosedSubDivCurve<T>::getEndP() const
+    inline T PClosedSubDivCurve<T>::getEndP() const
     {
         return 1;
     }
@@ -69,7 +69,7 @@ namespace kwi
     // *************************
 
     template <typename T>
-    inline void ClosedSubDivCurve<T>::laneRiesenfeldClosed(
+    inline void PClosedSubDivCurve<T>::laneRiesenfeldClosed(
       std::vector<DVector<Vector<T, 3>>>& p, int k, int d) const
     {
         // p = initial points
@@ -105,7 +105,7 @@ namespace kwi
 
     template <typename T>
     inline int
-    ClosedSubDivCurve<T>::doublePart(std::vector<DVector<Vector<T, 3>>>& p,
+    PClosedSubDivCurve<T>::doublePart(std::vector<DVector<Vector<T, 3>>>& p,
                                      int                                 n) const
     {
         for (int i = n - 1; i > 0; --i) {
@@ -117,7 +117,7 @@ namespace kwi
     }
 
     template <typename T>
-    void ClosedSubDivCurve<T>::smoothPartClosed(
+    void PClosedSubDivCurve<T>::smoothPartClosed(
       std::vector<DVector<Vector<T, 3>>>& p, int n, int d) const
     {
         for (int j = 1; j < d; ++j) {

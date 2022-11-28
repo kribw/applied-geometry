@@ -115,9 +115,12 @@ qt5_wrap_cpp( HDRS_MOC
   application/node.h
   application/femobject.h
 
-  applied_geometry/bspline.h
-  applied_geometry/closedsubdivcurve.h
-  applied_geometry/modelcurve.h
+  appliedgeometry/bspline.h
+  appliedgeometry/pclosedsubdivcurve.h
+
+  appliedgeometry/modelcurves/pastroidcurve.h
+  appliedgeometry/modelcurves/pepitrochoidcurve.h
+  appliedgeometry/modelcurves/plissajouscurve.h
 
   scenario.h
   )
@@ -154,4 +157,4 @@ target_sources( ${PROJECT_NAME} PRIVATE
   application/femobject.cpp
 
   scenario.cpp
-)
+ "appliedgeometry/modelcurves/pepitrochoidcurve.c" "appliedgeometry/modelcurves/pepitrochoidcurve.h" "appliedgeometry/modelcurves/plissajouscurve.c" "appliedgeometry/modelcurves/plissajouscurve.h")

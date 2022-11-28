@@ -15,9 +15,11 @@
 #include <QQuickItem>
 
 // applied_geometry
-#include "applied_geometry/bspline.h"
-#include "applied_geometry/closedsubdivcurve.h"
-#include "applied_geometry/modelcurve.h"
+#include "appliedgeometry/bspline.h"
+#include "appliedgeometry/pclosedsubdivcurve.h"
+#include "appliedgeometry/modelcurves/pastroidcurve.h"
+#include "appliedgeometry/modelcurves/pepitrochoidcurve.h"
+#include "appliedgeometry/modelcurves/plissajouscurve.h"
 
 // stl
 #include <cmath>
@@ -98,8 +100,8 @@ void Scenario::initializeScenario()
     p = {1.0, 1.0, 0.0};
     points.push_back(p);
 
-    // std::cout << points << std::endl;
 
+    //// Create b-spline
     // auto bspline = new kwi::BSpline<float>(points);
     // bspline->toggleDefaultVisualizer();
     // bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
@@ -107,45 +109,47 @@ void Scenario::initializeScenario()
     // this->scene()->insert(bspline);
 
     // Use circle to approx points
-    /* auto const m      = 30;
-    auto       circle = new GMlib::PCircle<float>(2.0);
-    circle->toggleDefaultVisualizer();
-    circle->sample(50, 0);
-    this->scene()->insert(circle);
+    // auto circle = new GMlib::PCircle<float>(2.0);
+    // circle->toggleDefaultVisualizer();
+    // circle->sample(50, 0);
+    // this->scene()->insert(circle);
 
-    auto p     = GMlib::DVector<GMlib::Vector<float, 3>>(m);
-    auto delta = circle->getParDelta() / (m - 1);
+    // auto const m     = 30;
+    // auto       p_2   = GMlib::DVector<GMlib::Vector<float, 3>>(m);
+    // auto       delta = circle->getParDelta() / (m - 1);
 
-    for (int i = 0; i < m; ++i) {
-        p[i] = circle->getPosition(circle->getParStart() + i * delta);
-    }
+    // for (int i = 0; i < m; ++i) {
+    //     p_2[i] = circle->getPosition(circle->getParStart() + i * delta);
+    // }
 
-    auto bspline = new kwi::BSpline<float>(p, 20);
-    bspline->toggleDefaultVisualizer();
-    bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
-    bspline->sample(50, 0);
-    this->scene()->insert(bspline);
-    qDebug() << std::pow(2, 5); */
+    // auto bspline2 = new kwi::BSpline<float>(p_2, 20);
+    // bspline2->toggleDefaultVisualizer();
+    // bspline2->setMaterial(GMlib::GMmaterial::polishedGreen());
+    // bspline2->sample(50, 0);
+    // this->scene()->insert(bspline2);
 
 
-    // DVector<Vector<float, 3>> p;
-    // auto closed_curve = new kwi::ClosedSubDivCurve<float>(points, 2);
+    // DVector<Vector<float, 3>> p_3;
+    // auto closed_curve = new kwi::PClosedSubDivCurve<float>(points, 2);
     // closed_curve->toggleDefaultVisualizer();
     // closed_curve->sample(4, 0);
     // this->scene()->insert(closed_curve);
-    //
-    //
-    //    std::cout << "delta: " << delta << std::endl;
-    //    std::cout << "start: " << circle.getParStart() << std::endl;
-    //    std::cout << "end: " << circle.getParEnd() << std::endl;
-    //    std::cout << "p: " << p << std::endl;
-    // for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
-    //        vec[i] = circle.get
-    //}
-    auto model_curve = new kwi::ModelCurve<float>(4.0);
-    model_curve->toggleDefaultVisualizer();
-    model_curve->sample(30, 0);
-    this->scene()->insert(model_curve);
+
+
+    // auto astroid_curve = new kwi::PAstroidCurve<float>(4.0);
+    // astroid_curve->toggleDefaultVisualizer();
+    // astroid_curve->sample(30, 0);
+    // this->scene()->insert(astroid_curve);
+
+    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(1.0, 1.0, 5.0);
+    epitrochoid_curve->toggleDefaultVisualizer();
+    epitrochoid_curve->sample(60, 0);
+    this->scene()->insert(epitrochoid_curve);
+
+    auto lissajous_curve = new kwi::PLissajousCurve<float>(1.0, 1.0, float(M_2PI), 1.0);
+    lissajous_curve->toggleDefaultVisualizer();
+    lissajous_curve->sample(60, 0);
+    this->scene()->insert(lissajous_curve);
 }
 
 void Scenario::cleanupScenario() {}
