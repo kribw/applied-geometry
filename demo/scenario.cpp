@@ -76,37 +76,37 @@ void Scenario::initializeScenario()
 
 
 
-    //    GMlib::DVector<GMlib::Vector<float, 3>> points;
-    //    GMlib::Vector<float, 3>                 p;
-    //    const float                             scale = 1.0;
+    // GMlib::DVector<GMlib::Vector<float, 3>> points;
+    // GMlib::Vector<float, 3>                 p;
+    // const float                             scale = 1.0;
 
-    //    p = (0.0, 0.0, 0.0);
-    //    points.push_back(p);
+    // p = (0.0, 0.0, 0.0);
+    // points.push_back(p);
 
-    //    p = {1.0 * scale, 1.0 * scale, 1.0};
-    //    points.push_back(p);
+    // p = {1.0 * scale, 1.0 * scale, 1.0};
+    // points.push_back(p);
 
-    //    p = {2.0 * scale, 0.0, 2.0};
-    //    points.push_back(p);
+    // p = {2.0 * scale, 0.0, 2.0};
+    // points.push_back(p);
 
-    //    p = {3.0 * scale, 1.0 * scale, 3.0};
-    //    points.push_back(p);
+    // p = {3.0 * scale, 1.0 * scale, 3.0};
+    // points.push_back(p);
 
-    //    p = {4.0 * scale, 0.0, 0.0};
-    //    points.push_back(p);
+    // p = {4.0 * scale, 0.0, 0.0};
+    // points.push_back(p);
 
-    //    p = {5.0 * scale, 3.0 * scale, 0.0};
-    //    points.push_back(p);
+    // p = {5.0 * scale, 3.0 * scale, 0.0};
+    // points.push_back(p);
 
-    //    std::cout << points << std::endl;
+    // std::cout << points << std::endl;
 
-    //    auto bspline = new kwi::BSpline<float>(points);
-    //    bspline->toggleDefaultVisualizer();
-    //    bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
-    //    bspline->sample(50, 0);
-    //    this->scene()->insert(bspline);
+    // auto bspline = new kwi::BSpline<float>(points);
+    // bspline->toggleDefaultVisualizer();
+    // bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
+    // bspline->sample(50, 0);
+    // this->scene()->insert(bspline);
 
-    //     Use circle to approx points
+    // Use circle to approx points
     auto const m      = 30;
     auto       circle = new GMlib::PCircle<float>(2.0);
     circle->toggleDefaultVisualizer();
@@ -136,7 +136,7 @@ void Scenario::initializeScenario()
     // for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
     //        vec[i] = circle.get
     //}
-    auto model_curve = new kwi::ModelCurve<float>();
+    // auto model_curve = new kwi::ModelCurve<float>();
 }
 
 void Scenario::cleanupScenario() {}
