@@ -18,7 +18,7 @@ namespace kwi
         GM_SCENEOBJECT(ModelCurve)
 
       public:
-        ModelCurve();
+        ModelCurve(T a);
         virtual ~ModelCurve();
 
         //****************************************
@@ -26,7 +26,6 @@ namespace kwi
         //****************************************
         // from PCurve
         bool isClosed() const override;
-        void sample(int m, int d) override;
 
       protected:
         // Virtual functions from PCurve, which have to be implemented locally
@@ -35,6 +34,7 @@ namespace kwi
         T    getEndP() const override;
 
       private:
+        T _a;
     };   // END class ModelCurve
 
 }   // namespace kwi
