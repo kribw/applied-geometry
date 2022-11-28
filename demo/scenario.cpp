@@ -76,27 +76,27 @@ void Scenario::initializeScenario()
 
 
 
-    // GMlib::DVector<GMlib::Vector<float, 3>> points;
-    // GMlib::Vector<float, 3>                 p;
-    // const float                             scale = 1.0;
+    GMlib::DVector<GMlib::Vector<float, 3>> points;
+    GMlib::Vector<float, 3>                 p;
+    const float                             scale = 1.0;
 
-    // p = (0.0, 0.0, 0.0);
-    // points.push_back(p);
+    p = (0.0, 0.0, 0.0);
+    points.push_back(p);
 
-    // p = {1.0 * scale, 1.0 * scale, 1.0};
-    // points.push_back(p);
+    p = {0.0, 3.0, 0.0};
+    points.push_back(p);
 
-    // p = {2.0 * scale, 0.0, 2.0};
-    // points.push_back(p);
+    p = {1.0, 2.0, 0.0};
+    points.push_back(p);
 
-    // p = {3.0 * scale, 1.0 * scale, 3.0};
-    // points.push_back(p);
+    p = {2.0, 3.0, 0.0};
+    points.push_back(p);
 
-    // p = {4.0 * scale, 0.0, 0.0};
-    // points.push_back(p);
+    p = {2.0, 0.0, 0.0};
+    points.push_back(p);
 
-    // p = {5.0 * scale, 3.0 * scale, 0.0};
-    // points.push_back(p);
+    p = {1.0, 1.0, 0.0};
+    points.push_back(p);
 
     // std::cout << points << std::endl;
 
@@ -107,7 +107,7 @@ void Scenario::initializeScenario()
     // this->scene()->insert(bspline);
 
     // Use circle to approx points
-    auto const m      = 30;
+    /* auto const m      = 30;
     auto       circle = new GMlib::PCircle<float>(2.0);
     circle->toggleDefaultVisualizer();
     circle->sample(50, 0);
@@ -119,16 +119,22 @@ void Scenario::initializeScenario()
     for (int i = 0; i < m; ++i) {
         p[i] = circle->getPosition(circle->getParStart() + i * delta);
     }
+
     auto bspline = new kwi::BSpline<float>(p, 20);
     bspline->toggleDefaultVisualizer();
     bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
     bspline->sample(50, 0);
     this->scene()->insert(bspline);
-    qDebug() << std::pow(2, 5);
+    qDebug() << std::pow(2, 5); */
 
-    //    auto closed_curve = new kwi::ClosedSubDivCurve<float>();
-    //    closed_curve->sample(1, 2);
 
+    // DVector<Vector<float, 3>> p;
+    // auto closed_curve = new kwi::ClosedSubDivCurve<float>(points, 2);
+    // closed_curve->toggleDefaultVisualizer();
+    // closed_curve->sample(4, 0);
+    // this->scene()->insert(closed_curve);
+    //
+    //
     //    std::cout << "delta: " << delta << std::endl;
     //    std::cout << "start: " << circle.getParStart() << std::endl;
     //    std::cout << "end: " << circle.getParEnd() << std::endl;
@@ -136,7 +142,10 @@ void Scenario::initializeScenario()
     // for (int i = circle.getParStart(); i < circle.getParEnd(); i += delta) {
     //        vec[i] = circle.get
     //}
-    // auto model_curve = new kwi::ModelCurve<float>();
+    auto model_curve = new kwi::ModelCurve<float>(4.0);
+    model_curve->toggleDefaultVisualizer();
+    model_curve->sample(30, 0);
+    this->scene()->insert(model_curve);
 }
 
 void Scenario::cleanupScenario() {}
