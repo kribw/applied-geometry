@@ -37,10 +37,11 @@ namespace kwi
         DVector<Vector<float, 3>> _points;   // points
 
       private:
-        DVector<Vector<float, 3>>
-             laneRiesenfeldClosed(DVector<Vector<float, 3>> p, int k, int d);
-        int  doublePart(DVector<Vector<float, 3>> p, int n);
-        void smoothPartClosed(DVector<Vector<float, 3>> p, int n, int d);
+        void laneRiesenfeldClosed(std::vector<DVector<Vector<T, 3>>>& p, int k,
+                                  int d) const;
+        int  doublePart(std::vector<DVector<Vector<T, 3>>>& p, int n) const;
+        void smoothPartClosed(std::vector<DVector<Vector<T, 3>>>& p, int n,
+                              int d) const;
     };   // END class PCircle
 
 }   // namespace kwi

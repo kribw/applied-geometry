@@ -27,17 +27,18 @@ namespace kwi
     template <typename T>
     inline void ClosedSubDivCurve<T>::sample(int depth, int d)
     {
+        // depth = number of times to double points
         // m = no. samples
         // d = derivatives in each sample = 0
         _visu.resize(1);
-        _checkSampleVal(depth, d); // depth = m
+        _checkSampleVal(depth, d);   // depth = m
 
-        qDebug() << std::pow(2, 5);
-
-//        laneRiesenfeldClosed(std::vector<DVector<Vector<T, 3>>>&)
-        // preSample <-> ClosedSubDivCurveClosed()?
-        // this.visu[0].sample_val, this.visu[0].surrounding_sphere
-        //        setEditDone
+        laneRiesenfeldClosed(this->_visu[0].sample_val, depth, d);
+        std::cout << "sample_val" << std::endl;
+        std::cout << this->_visu[0].sample_val << std::endl;
+        std::cout << "sample_val" << std::endl;
+        
+        this->setEditDone();
     }
 
     // *************************
@@ -63,43 +64,68 @@ namespace kwi
     }
 
 
-
-    // Resample
-    // p[i][0]
-    // s.reset
-    // computeSurroundingSphere(p, s)
-
     // *************************
     // ** Private functions   **
     // *************************
 
     template <typename T>
-    inline DVector<Vector<float, 3>>
-    ClosedSubDivCurve<T>::laneRiesenfeldClosed(DVector<Vector<float, 3>> p,
-                                               int k, int d)
+    inline void ClosedSubDivCurve<T>::laneRiesenfeldClosed(
+      std::vector<DVector<Vector<T, 3>>>& p, int k, int d) const
     {
         // p = initial points
-        // k = level of refinement
+        // k = level of refinement / no. times to double points
         // d = degree
-        int n = p.getDim();
-        int m = 2 ^ k(n - d) + d;
-        //        DVector<Vector<float, 3>>
+        int n = _points.getDim();
+        int m = pow(2, k) * n + 1;
 
-        return null;
+        p.resize(m);
+
+        for (int i = 0; i < p.size(); ++i) {
+            p[i].setDim(d + 1);
+        }
+
+        for (int i = 0; i < n; ++i) {
+            p[i][0] = _points[i];
+        }
+        p[n++] = p[0]; // Close the curve
+
+        for (int i = 0; i < k; ++i) {
+            n = doublePart(p, n);
+            smoothPartClosed(p, n, _d);
+        }
+
+        Sphere<T, 3>& s = this->_visu[0].sur_sphere;
+        s.reset();
+        computeSurroundingSphere(p, s);
+
+        if (d > 0)
+            DD::compute1D(p, double(n - 1) / (p.size() - 1), isClosed(), d, 0);
     }
 
 
     template <typename T>
-    inline int ClosedSubDivCurve<T>::doublePart(DVector<Vector<float, 3>> p,
-                                                int                       n)
+    inline int
+    ClosedSubDivCurve<T>::doublePart(std::vector<DVector<Vector<T, 3>>>& p,
+                                     int                                 n) const
     {
-        return 0;
+        for (int i = n - 1; i > 0; --i) {
+            p[2 * i][0]    = p[i][0];
+            p[(2 * i) - 1][0] = 0.5 * (p[i][0] + p[i - 1][0]);
+        }
+
+        return (2 * n) - 1;
     }
 
     template <typename T>
-    void ClosedSubDivCurve<T>::smoothPartClosed(DVector<Vector<float, 3>> p,
-                                                int n, int d)
+    void ClosedSubDivCurve<T>::smoothPartClosed(
+      std::vector<DVector<Vector<T, 3>>>& p, int n, int d) const
     {
+        for (int j = 1; j < d; ++j) {
+            for (int i = 0; i < n - 1; ++i) {
+                p[i][0] = 0.5 * (p[i][0] + p[i + 1][0]);
+            }
+            p[n - 1][0] = p[0][0];
+        }
     }
 
 
