@@ -14,12 +14,12 @@ using namespace GMlib;
 namespace kwi
 {
     template <typename T>
-    class PLissajousCurve : public PCurve<T, 3> {
-        GM_SCENEOBJECT(PLissajousCurve)
+    class PNephroidCurve : public PCurve<T, 3> {
+        GM_SCENEOBJECT(PNephroidCurve)
 
       public:
-        PLissajousCurve(T a, T b, T c, T n);
-        virtual ~PLissajousCurve();
+        PNephroidCurve(T a);
+        virtual ~PNephroidCurve();
 
         //****************************************
         //****** Virtual public functions   ******
@@ -35,14 +35,11 @@ namespace kwi
 
       private:
         T _a;
-        T _b;
-        T _c;
-        T _n;
-    };   // END class PLissajousCurve
+    };   // END class PNephroidCurve
 
 }   // namespace kwi
 
-// Include PLissajousCurve class function implementations
-#include "plissajouscurve.c"
+// Include PNephroidCurve class function implementations
+#include "pnephroidcurve.c"
 
 #endif   // KWI_P_LISSAJOUS_CURVE_H

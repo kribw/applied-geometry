@@ -6,21 +6,18 @@ namespace kwi
     // using namespace GMlib;
 
     template <typename T>
-    PLissajousCurve<T>::PLissajousCurve(T a = T(1), T b = T(1), T c = T(M_2PI), T n = T(1))
+    PNephroidCurve<T>::PNephroidCurve(T a = T(1))
     {
         _a = a;
-        _b = b;
-        _c = c;
-        _n = n;
     }
 
     template <typename T>
-    PLissajousCurve<T>::~PLissajousCurve()
+    PNephroidCurve<T>::~PNephroidCurve()
     {
     }
 
     template <typename T>
-    inline bool PLissajousCurve<T>::isClosed() const
+    inline bool PNephroidCurve<T>::isClosed() const
     {
         return true;
     }
@@ -30,22 +27,22 @@ namespace kwi
     // *************************
 
     template <typename T>
-    void PLissajousCurve<T>::eval(T t, int d, bool /*l*/) const
+    void PNephroidCurve<T>::eval(T t, int d, bool /*l*/) const
     {
         this->_p.setDim(d + 1);
-        this->_p[0][0] = _a * std::sin(_n * t + _c);
-        this->_p[0][1] = _b * std::sin(t);
+        this->_p[0][0] = _a * (3 * std::cos(t) - std::cos(3 * t));
+        this->_p[0][1] = _a * (3 * std::sin(t) - std::sin(3 * t));
         this->_p[0][2] = T(0);
     }
 
     template <typename T>
-    inline T PLissajousCurve<T>::getStartP() const
+    inline T PNephroidCurve<T>::getStartP() const
     {
         return 0;
     }
 
     template <typename T>
-    inline T PLissajousCurve<T>::getEndP() const
+    inline T PNephroidCurve<T>::getEndP() const
     {
         return M_2PI;
     }

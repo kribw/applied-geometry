@@ -19,7 +19,7 @@
 #include "appliedgeometry/pclosedsubdivcurve.h"
 #include "appliedgeometry/modelcurves/pastroidcurve.h"
 #include "appliedgeometry/modelcurves/pepitrochoidcurve.h"
-#include "appliedgeometry/modelcurves/plissajouscurve.h"
+#include "appliedgeometry/modelcurves/pnephroidcurve.h"
 
 // stl
 #include <cmath>
@@ -141,15 +141,15 @@ void Scenario::initializeScenario()
     // astroid_curve->sample(30, 0);
     // this->scene()->insert(astroid_curve);
 
-    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
-    epitrochoid_curve->toggleDefaultVisualizer();
-    epitrochoid_curve->sample(600, 0);
-    this->scene()->insert(epitrochoid_curve);
+    //auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
+    //epitrochoid_curve->toggleDefaultVisualizer();
+    //epitrochoid_curve->sample(600, 0);
+    //this->scene()->insert(epitrochoid_curve);
 
-    //auto lissajous_curve = new kwi::PLissajousCurve<float>(1.0, 1.0, float(M_2PI), 1.0);
-    //lissajous_curve->toggleDefaultVisualizer();
-    //lissajous_curve->sample(60, 0);
-    //this->scene()->insert(lissajous_curve);
+    auto nephroid = new kwi::PNephroidCurve<float>(0.5);
+    nephroid->toggleDefaultVisualizer();
+    nephroid->sample(600, 0);
+    this->scene()->insert(nephroid);
 }
 
 void Scenario::cleanupScenario() {}

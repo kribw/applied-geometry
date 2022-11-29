@@ -120,7 +120,7 @@ qt5_wrap_cpp( HDRS_MOC
 
   appliedgeometry/modelcurves/pastroidcurve.h
   appliedgeometry/modelcurves/pepitrochoidcurve.h
-  appliedgeometry/modelcurves/plissajouscurve.h
+  appliedgeometry/modelcurves/pnephroidcurve.h
 
   scenario.h
   )
@@ -157,4 +157,4 @@ target_sources( ${PROJECT_NAME} PRIVATE
   application/femobject.cpp
 
   scenario.cpp
- "appliedgeometry/modelcurves/pepitrochoidcurve.c" "appliedgeometry/modelcurves/pepitrochoidcurve.h" "appliedgeometry/modelcurves/plissajouscurve.c" "appliedgeometry/modelcurves/plissajouscurve.h")
+ "appliedgeometry/modelcurves/pepitrochoidcurve.c" "appliedgeometry/modelcurves/pepitrochoidcurve.h" "appliedgeometry/modelcurves/pnephroidcurve.c" "appliedgeometry/modelcurves/pnephroidcurve.c.h")
