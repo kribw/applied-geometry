@@ -141,15 +141,15 @@ void Scenario::initializeScenario()
     // astroid_curve->sample(30, 0);
     // this->scene()->insert(astroid_curve);
 
-    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(1.0, 1.0, 5.0);
+    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
     epitrochoid_curve->toggleDefaultVisualizer();
-    epitrochoid_curve->sample(60, 0);
+    epitrochoid_curve->sample(600, 0);
     this->scene()->insert(epitrochoid_curve);
 
-    auto lissajous_curve = new kwi::PLissajousCurve<float>(1.0, 1.0, float(M_2PI), 1.0);
-    lissajous_curve->toggleDefaultVisualizer();
-    lissajous_curve->sample(60, 0);
-    this->scene()->insert(lissajous_curve);
+    //auto lissajous_curve = new kwi::PLissajousCurve<float>(1.0, 1.0, float(M_2PI), 1.0);
+    //lissajous_curve->toggleDefaultVisualizer();
+    //lissajous_curve->sample(60, 0);
+    //this->scene()->insert(lissajous_curve);
 }
 
 void Scenario::cleanupScenario() {}

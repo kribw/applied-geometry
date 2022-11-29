@@ -34,9 +34,9 @@ namespace kwi
     {
         this->_p.setDim(d + 1);
         this->_p[0][0]
-          = ((_a + _b) * std::cos(t)) - (_c * std::cos((_a / (_b + t)) * t));
+          = ((_a + _b) * std::cos(t)) - (_c * std::cos((_a + _b/ (_b)) * t));
         this->_p[0][1]
-          = ((_a + _b) * std::sin(t)) - (_c * std::sin((_a / (_b + 1)) * t));
+          = ((_a + _b) * std::sin(t)) - (_c * std::sin((_a + _b/ (_b)) * t));
         this->_p[0][2] = T(0);
     }
 
