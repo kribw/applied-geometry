@@ -16,7 +16,7 @@ namespace kwi
         GM_SCENEOBJECT(BlendingSpline)
 
       public:
-        BlendingSpline(PCurve<T, 3>& mc, const int n);
+        BlendingSpline(PCurve<T, 3>* mc, const int n);
         virtual ~BlendingSpline();
 
         //****************************************
@@ -31,18 +31,19 @@ namespace kwi
         T    getStartP() const override;
         T    getEndP() const override;
 
-        int                       _d;    // dimension
-        int                       _k;    // order
-        std::vector<T>            _t;    // knot vector
-        PCurve<T, 3>*             _mc;   // model curve
-        std::vector<PSubCurve<T>> _lc;   // local curves
+        int                        _d;    // degree
+        int                        _k;    // order
+        std::vector<T>             _t;    // knot vector
+        int                        _n;    // no. control curves
+        PCurve<T, 3>*              _mc;   // model curve
+        std::vector<PCurve<T, 3>*> _lc;   // local curves
 
       private:
-        void  create_knot_vector(const int n);
-        void  create_local_curves(const int n);
-        T     get_w(const int d, const int i, const T t) const;
-        int   get_i(const T t) const;
-        float get_b(const T t) const;
+        void create_knot_vector(const int n);
+        void create_local_curves(const int n);
+        T    get_w(const int d, const int i, const T t) const;
+        int  get_i(const T t) const;
+        T    get_b(const T t) const;
     };   // END class BlendingSpline
 
 }   // namespace kwi

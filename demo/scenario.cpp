@@ -20,6 +20,7 @@
 #include "appliedgeometry/modelcurves/pastroidcurve.h"
 #include "appliedgeometry/modelcurves/pepitrochoidcurve.h"
 #include "appliedgeometry/modelcurves/pnephroidcurve.h"
+#include "appliedgeometry/blendingspline.h"
 
 // stl
 #include <cmath>
@@ -141,15 +142,20 @@ void Scenario::initializeScenario()
     // astroid_curve->sample(30, 0);
     // this->scene()->insert(astroid_curve);
 
-    //auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
-    //epitrochoid_curve->toggleDefaultVisualizer();
-    //epitrochoid_curve->sample(600, 0);
-    //this->scene()->insert(epitrochoid_curve);
+    // auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0,
+    // 0.5, 6.0); epitrochoid_curve->toggleDefaultVisualizer();
+    // epitrochoid_curve->sample(600, 0);
+    // this->scene()->insert(epitrochoid_curve);
 
     auto nephroid = new kwi::PNephroidCurve<float>(0.5);
-    nephroid->toggleDefaultVisualizer();
-    nephroid->sample(600, 0);
-    this->scene()->insert(nephroid);
+    //nephroid->toggleDefaultVisualizer();
+    //nephroid->sample(600, 0);
+    // this->scene()->insert(nephroid);
+
+    auto blendingspline = new kwi::BlendingSpline<float>(nephroid, 4);
+    blendingspline->toggleDefaultVisualizer();
+    blendingspline->sample(100, 0);
+    this->scene()->insert(blendingspline);
 }
 
 void Scenario::cleanupScenario() {}

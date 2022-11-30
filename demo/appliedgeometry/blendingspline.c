@@ -6,11 +6,12 @@ namespace kwi
     using namespace GMlib;
 
     template <typename T>
-    BlendingSpline<T>::BlendingSpline(PCurve<T, 3>& mc, const int n)
+    BlendingSpline<T>::BlendingSpline(PCurve<T, 3>* mc, const int n)
     {
         _mc = mc;                 // set model curve
-        _d  = 1;                  // degree ?
+        _d  = 1;                  // degree
         _k  = _d + 1;             // order
+        _n  = n;                  // no. control curves
         create_knot_vector(n);    // create knot vector
         create_local_curves(n);   // create local curves
     }
@@ -37,6 +38,14 @@ namespace kwi
         this->_p.setDim(d + 1);
 
         // do something
+
+        // p = x + y
+        // evaluate parent (t, d)
+        const int  i  = get_i(t);
+        const T    w1 = get_w(d, i, t);
+        const auto x  = (1 - get_b(w1)) * _lc[i - 1]->evaluateParent(t, d);
+        const auto y  = get_b(w1) * _lc[i]->evaluateParent(t, d);
+        this->_p      = x + y;
     }
 
     template <typename T>
@@ -66,8 +75,8 @@ namespace kwi
         T start = this->getParStart();
         T delta = this->getParDelta();
 
-        for (int i = 0; i < n + 1) {
-            _t[i + 1] = start + i * (delta / n + 1);
+        for (int i = 0; i < n + 1; ++i) {
+            _t[i + 1] = start + i * (delta / n);
         }
         _t[0] = _t[1] - (_t[n + 1] - _t[n]);
     }
@@ -77,7 +86,13 @@ namespace kwi
     {
         for (int i = 0; i < n; ++i) {
             // start, end, current
-            _lc.push_back(new PSubCurve<T>(_mc, _t[i], _t[i + 2], _t[i + 1]));
+            auto curve = new PSubCurve<T>(_mc, _t[i], _t[i + 2], _t[i + 1]);
+            curve->toggleDefaultVisualizer();
+            curve->sample(4, 0);
+            curve->setCollapsed(true);
+            curve->setParent(this);
+            this->insert(curve);
+            _lc.push_back(curve);
         }
         _lc.push_back(_lc[0]);
     }
@@ -87,21 +102,20 @@ namespace kwi
     {
         return (t - _t[i]) / (_t[i + d] - _t[i]);
     }
-    
+
     template <typename T>
     inline int BlendingSpline<T>::get_i(const T t) const
     {
-        for (int i = 0; i < _t.size()) {
-            if (t <= _t[i]) return i;
+        for (int i = _d; i < _n; ++i) {
+            if (t <= _t[i + 1]) return i;
         }
-
-        return _t.size() - 1; // in case of rounding error or similar
+        return _n;   // in case of rounding error or similar
     }
 
     template <typename T>
-    inline float BlendingSpline<T>::get_b(const T t) const
+    inline T BlendingSpline<T>::get_b(const T t) const
     {
-        return 0;
+        return T(-2 * std::pow(t, 3) + 3 * std::pow(t, 2));
     }
 
 }   // END namespace kwi
