@@ -28,6 +28,7 @@ namespace kwi
       protected:
         // Virtual functions from PCurve, which have to be implemented locally
         void eval(T t, int d, bool l) const override;
+        void localSimulate(double dt) override;
         T    getStartP() const override;
         T    getEndP() const override;
 

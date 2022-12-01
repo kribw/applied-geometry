@@ -37,15 +37,18 @@ namespace kwi
         // Set dim (derivatives + 1)
         this->_p.setDim(d + 1);
 
-        // do something
-
-        // p = x + y
-        // evaluate parent (t, d)
         const int  i  = get_i(t);
-        const T    w1 = get_w(d, i, t);
+        const T    w1 = get_w(_d, i, t);
         const auto x  = (1 - get_b(w1)) * _lc[i - 1]->evaluateParent(t, d);
         const auto y  = get_b(w1) * _lc[i]->evaluateParent(t, d);
         this->_p      = x + y;
+    }
+
+    template <typename T>
+    void BlendingSpline<T>::localSimulate(double dt) 
+    {
+        this->move(Vector<float, 3>(2.0 * std::sin(dt), 0.0, 0.0));
+        // rotate, tilt/turn/roll, change shape
     }
 
     template <typename T>
