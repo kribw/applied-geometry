@@ -110,10 +110,10 @@ void Scenario::initializeScenario()
     // this->scene()->insert(bspline);
 
     // Use circle to approx points
-    // auto circle = new GMlib::PCircle<float>(2.0);
-    // circle->toggleDefaultVisualizer();
-    // circle->sample(50, 0);
-    // this->scene()->insert(circle);
+     //auto circle = new GMlib::PCircle<float>(2.0);
+     //circle->toggleDefaultVisualizer();
+     //circle->sample(50, 0);
+     //this->scene()->insert(circle);
 
     // auto const m     = 30;
     // auto       p_2   = GMlib::DVector<GMlib::Vector<float, 3>>(m);
@@ -148,14 +148,15 @@ void Scenario::initializeScenario()
     // this->scene()->insert(epitrochoid_curve);
 
     auto nephroid = new kwi::PNephroidCurve<float>(0.5);
-    //nephroid->toggleDefaultVisualizer();
-    //nephroid->sample(600, 0);
-    // this->scene()->insert(nephroid);
+    nephroid->toggleDefaultVisualizer();
+    nephroid->sample(600, 0);
+     this->scene()->insert(nephroid);
 
     auto blendingspline = new kwi::BlendingSpline<float>(nephroid, 4);
     blendingspline->toggleDefaultVisualizer();
     blendingspline->sample(100, 0);
     this->scene()->insert(blendingspline);
+    //blendingspline->translate(GMlib::Vector<float, 3>(5.0, 0.0, 0.0));
 }
 
 void Scenario::cleanupScenario() {}
