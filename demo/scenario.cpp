@@ -21,6 +21,8 @@
 #include "appliedgeometry/modelcurves/pepitrochoidcurve.h"
 #include "appliedgeometry/modelcurves/pnephroidcurve.h"
 #include "appliedgeometry/blendingspline.h"
+#include "appliedgeometry/blendingsplinesurface.h"
+#include "appliedgeometry/simplesubsurf.h"
 
 // stl
 #include <cmath>
@@ -147,16 +149,19 @@ void Scenario::initializeScenario()
     // epitrochoid_curve->sample(600, 0);
     // this->scene()->insert(epitrochoid_curve);
 
-    auto nephroid = new kwi::PNephroidCurve<float>(0.5);
-    nephroid->toggleDefaultVisualizer();
-    nephroid->sample(600, 0);
-     this->scene()->insert(nephroid);
+    //auto nephroid = new kwi::PNephroidCurve<float>(0.5);
+    //nephroid->toggleDefaultVisualizer();
+    //nephroid->sample(600, 0);
+    // this->scene()->insert(nephroid);
 
-    auto blendingspline = new kwi::BlendingSpline<float>(nephroid, 4);
-    blendingspline->toggleDefaultVisualizer();
-    blendingspline->sample(100, 0);
-    this->scene()->insert(blendingspline);
+    //auto blendingspline = new kwi::BlendingSpline<float>(nephroid, 4);
+    //blendingspline->toggleDefaultVisualizer();
+    //blendingspline->sample(100, 0);
+    //this->scene()->insert(blendingspline);
     //blendingspline->translate(GMlib::Vector<float, 3>(5.0, 0.0, 0.0));
+
+    auto torus = new TestTorus();
+    auto bs_surface = new kwi::BlendingSplineSurface<float>(torus, 4, 4);
 }
 
 void Scenario::cleanupScenario() {}
