@@ -29,13 +29,13 @@ namespace kwi
         // Virtual functions from PSurf, which have to be implemented locally
         void eval(T u, T v, int d1, int d2, bool lu = true,
                   bool lv = true) const override;
+        void localSimulate(double dt) override;
         T    getStartPU() const override;
         T    getEndPU() const override;
         T    getStartPV() const override;
         T    getEndPV() const override;
         bool isClosedU() const override;
         bool isClosedV() const override;
-        //void localSimulate(double dt) override;
 
         int                   _d;    // degree
         int                   _k;    // order

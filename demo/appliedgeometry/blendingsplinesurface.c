@@ -34,15 +34,59 @@ namespace kwi
     void BlendingSplineSurface<T>::eval(T u, T v, int d1, int d2, bool /*lu*/,
                                         bool /*lv*/) const
     {
+        // Thanks to Jan for helping me out  with the
+        // calculations in the eval function!
+
         // Set dim (derivatives + 1)
         this->_p.setDim(d1 + 1, d2 + 1);   // (2, 2)
 
-        // set p0
         int              i_u = get_index(_u, _nu, u);
         int              i_v = get_index(_v, _nv, v);
-        std::tuple<T, T> w_i = get_w(_u, _d, i_u, u);
-        std::tuple<T, T> w_j = get_w(_v, _d, i_v, v);
-        // std::tuple<T, T> b = get_b()
+        std::tuple<T, T> w_u = get_w(_u, _d, i_u, u);
+        std::tuple<T, T> w_v = get_w(_v, _d, i_v, v);
+        std::tuple<T, T> b_u = get_b(std::get<1>(w_u));
+        std::tuple<T, T> b_v = get_b(std::get<1>(w_v));
+
+        DMatrix<Vector<T, 3>> s00
+          = _ls(i_u - 1)(i_v - 1)->evaluateParent(u, v, d1, d2);
+        DMatrix<Vector<T, 3>> s01
+          = _ls(i_u - 1)(i_v)->evaluateParent(u, v, d1, d2);
+        DMatrix<Vector<T, 3>> s10
+          = _ls(i_u)(i_v - 1)->evaluateParent(u, v, d1, d2);
+        DMatrix<Vector<T, 3>> s11 = _ls(i_u)(i_v)->evaluateParent(u, v, d1, d2);
+
+        const T u1  = 1 - std::get<0>(b_u);
+        const T u2  = std::get<0>(b_u);
+        const T v1  = 1 - std::get<0>(b_v);
+        const T v2  = std::get<0>(b_v);
+        const T du1 = -std::get<1>(b_u) * std::get<1>(w_u);
+        const T du2 = std::get<1>(b_u) * std::get<1>(w_u);
+        const T dv1 = -std::get<1>(b_v) * std::get<1>(w_v);
+        const T dv2 = std::get<1>(b_v) * std::get<1>(w_v);
+
+        // position
+        _p[0][0] = u1 * v1 * s00(0)(0) + u2 * v1 * s10(0)(0)
+                   + u1 * v2 * s01(0)(0) + u2 * v2 * s11(0)(0);
+
+        // partial derivative u-direction
+        _p[0][1] = du1 * v1 * s00(0)(0) + du2 * v1 * s10(0)(0)
+                   + du1 * v2 * s01(0)(0) + du2 * v2 * s11(0)(0)
+                   + u1 * v1 * s00(0)(1) + u2 * v1 * s10(0)(1)
+                   + u1 * v2 * s01(0)(1) + u2 * v2 * s11(0)(1);
+
+        // partial derivative v-direction
+        _p[1][0] = u1 * dv1 * s00(0)(0) + u2 * dv1 * s10(0)(0)
+                   + +u1 * dv2 * s01(0)(0) + u2 * dv2 * s11(0)(0)
+                   + u1 * v1 * s00(1)(0) + u2 * v1 * s10(1)(0)
+                   + u1 * v2 * s01(1)(0) + u2 * v2 * s11(1)(0);
+
+        // dont need _p[1][1]
+    }
+
+    template <typename T>
+    void BlendingSplineSurface<T>::localSimulate(double dt)
+    {
+        this->sample(_visu[0][0][0], _visu[0][0][1], 1, 1);
     }
 
     template <typename T>
@@ -102,9 +146,6 @@ namespace kwi
     {
         knot_vector.resize(_k + n);
 
-        // T start = this->getParStart();
-        // T delta = this->getParDelta();
-
         for (int i = 0; i < n + 1; ++i) {
             knot_vector[i + 1] = start + i * (delta / n);
         }
@@ -133,8 +174,8 @@ namespace kwi
     template <typename T>
     inline void BlendingSplineSurface<T>::create_local_surfaces()
     {
-        _ls.setDim((isClosedU() ? _nu : _nu + 1),
-                   (isClosedV() ? _nv : _nv + 1));
+        _ls.setDim((isClosedU() ? _nu + 1 : _nu),
+                   (isClosedV() ? _nv + 1 : _nv));
 
         for (int i = 0; i < _nu; ++i) {
             for (int j = 0; j < _nv; ++j) {
@@ -142,14 +183,19 @@ namespace kwi
                 _ls[i][j]
                   = new PSimpleSubSurf<T>(_ms, _u[i], _u[i + 2], _u[i + 1],
                                           _v[j], _v[j + 2], _v[j + 1]);
+                _ls[i][j]->toggleDefaultVisualizer();
+                _ls[i][j]->sample(5, 5, 1, 1);
+                _ls[i][j]->setCollapsed(true);
+                _ls[i][j]->setParent(this);
+                this->insert(_ls[i][j]);
             }
         }
 
         if (isClosedU())
-            for (int i = 0; i < _nv; ++i) _ls[i][_nv] = _ls[i][0];
+            for (int i = 0; i < _nv; ++i) _ls[_nu][i] = _ls[0][i];
 
         if (isClosedV())
-            for (int j = 0; j < _nu; ++j) _ls[_nu][j] = _ls[0][j];
+            for (int j = 0; j < _nu; ++j) _ls[j][_nv] = _ls[j][0];
 
         if (isClosedU() && isClosedV()) _ls[_nu][_nv] = _ls[0][0];
     }
