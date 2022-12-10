@@ -45,10 +45,29 @@ namespace kwi
     }
 
     template <typename T>
-    void BlendingSpline<T>::localSimulate(double dt) 
+    void BlendingSpline<T>::localSimulate(double dt)
     {
-        this->move(Vector<float, 3>(2.0 * std::sin(dt), 0.0, 0.0));
-        // rotate, tilt/turn/roll, change shape
+        static double t        = 0.0;
+        static bool   increase = true;
+        std::cout << "t: " << t << std::endl;
+
+        if (t <= -0.6 || t >= 0.6) increase = !increase;
+
+        if (increase)
+            t += 0.01;
+        else
+            t -= 0.01;
+
+        Vector<float, 3> translation(t * 0.25, t * 0.0, t * 0.0);
+
+        for (int i = _n / 2; i < _n; ++i) {
+            _lc[i]->translate(translation);
+            _lc[i]->roll(Angle(t * 0.3));
+            //_lc[i]->setColor(GMcolor::green());
+            _lc[i]->setEditDone();
+        }
+        this->resample();
+        this->setEditDone();
     }
 
     template <typename T>
