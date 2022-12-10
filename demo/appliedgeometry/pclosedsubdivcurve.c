@@ -7,10 +7,10 @@ namespace kwi
 
     template <typename T>
     PClosedSubDivCurve<T>::PClosedSubDivCurve(const DVector<Vector<T, 3>>& p,
-                                            int                          d)
+                                              int                          d)
     {
-        _d      = d;
         _points = p;
+        _d      = d;
     }
 
     template <typename T>
@@ -37,7 +37,7 @@ namespace kwi
         std::cout << "sample_val" << std::endl;
         std::cout << this->_visu[0].sample_val << std::endl;
         std::cout << "sample_val" << std::endl;
-        
+
         this->setEditDone();
     }
 
@@ -76,7 +76,7 @@ namespace kwi
         // k = level of refinement / no. times to double points
         // d = degree
         int n = _points.getDim();
-        int m = pow(2, k) * n + 1;
+        int m = pow(2, k) * n + 1;   // Final no. of points
 
         p.resize(m);
 
@@ -87,9 +87,9 @@ namespace kwi
         for (int i = 0; i < n; ++i) {
             p[i][0] = _points[i];
         }
-        p[n++] = p[0]; // Close the curve
+        p[n++] = p[0];   // Close the curve
 
-        for (int i = 0; i < k; ++i) {
+        for (int i = 0; i < k; ++i) {   // For each level of refinement
             n = doublePart(p, n);
             smoothPartClosed(p, n, _d);
         }
@@ -106,10 +106,11 @@ namespace kwi
     template <typename T>
     inline int
     PClosedSubDivCurve<T>::doublePart(std::vector<DVector<Vector<T, 3>>>& p,
-                                     int                                 n) const
+                                      int n) const
     {
+        // Double the point set
         for (int i = n - 1; i > 0; --i) {
-            p[2 * i][0]    = p[i][0];
+            p[2 * i][0]       = p[i][0];
             p[(2 * i) - 1][0] = 0.5 * (p[i][0] + p[i - 1][0]);
         }
 
@@ -120,11 +121,12 @@ namespace kwi
     void PClosedSubDivCurve<T>::smoothPartClosed(
       std::vector<DVector<Vector<T, 3>>>& p, int n, int d) const
     {
+        // Replace points with values in between new points
         for (int j = 1; j < d; ++j) {
             for (int i = 0; i < n - 1; ++i) {
                 p[i][0] = 0.5 * (p[i][0] + p[i + 1][0]);
             }
-            p[n - 1][0] = p[0][0];
+            p[n - 1][0] = p[0][0];   // Close the curve
         }
     }
 
