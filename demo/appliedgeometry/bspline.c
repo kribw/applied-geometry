@@ -14,7 +14,7 @@ namespace kwi
     BSpline<T>::BSpline(const DVector<Vector<T, 3>>& c)
     {
         _c = c;                           // control points
-        _d = 2;                           // dimension should always be 2
+        _d = 2;                           // degree should always be 2
         _k = _d + 1;                      // order
         create_knot_vector(c.getDim());   // generate knot vector
     }
@@ -24,7 +24,7 @@ namespace kwi
     {
         // n = control points
         _c.setDim(n);
-        _d = 2;                             // dimension should always be 2
+        _d = 2;                             // degree should always be 2
         _k = _d + 1;                        // order
         create_knot_vector(n);              // generate knot vector
         _c = create_control_points(p, n);   // least square
@@ -95,8 +95,6 @@ namespace kwi
         for (int i = n; i < n + _k; ++i) {
             _t[i] = _t[n - 1] + 1;
         }
-
-        qDebug() << _t;
     }
 
     template <typename T>
