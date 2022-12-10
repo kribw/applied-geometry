@@ -10,6 +10,8 @@
 #include <scene/sceneobjects/gmpathtrack.h>
 #include <scene/sceneobjects/gmpathtrackarrows.h>
 #include <parametrics/curves/gmpcircle.h>
+#include <parametrics/surfaces/gmpplane.h>
+#include <parametrics/surfaces/gmptorus.h>
 
 // qt
 #include <QQuickItem>
@@ -76,104 +78,137 @@ void Scenario::initializeScenario()
      *                                                                         *
      ***************************************************************************/
 
+    // bSpline();
+    // bSplineLeastSquares();
+    // closedSubDiv();
+    // astroidCurve();
+    // epitrochoidCurve();
+    // nephroidCurve();
+    //blendingSpline();
+     blendingSplineSurface();
+}
+
+void Scenario::bSpline()
+{
     GMlib::Material mm(GMlib::GMmaterial::polishedBronze());
-    mm.set(45.0);
-
-
+    mm.set(90.0);
 
     GMlib::DVector<GMlib::Vector<float, 3>> points;
-    GMlib::Vector<float, 3>                 p;
-    const float                             scale = 1.0;
+    points.push_back(GMlib::Vector<float, 3>(0.0, 0.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(0.0, 3.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(1.0, 2.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(2.0, 3.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(2.0, 0.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(1.0, 1.0, 0.0));
 
-    p = (0.0, 0.0, 0.0);
-    points.push_back(p);
+    // B-spline constructor with control points
+    auto bspline = new kwi::BSpline<float>(points);
+    bspline->toggleDefaultVisualizer();
+    bspline->setMaterial(mm);
+    bspline->setColor(GMcolor::mediumSeaGreen());
+    bspline->sample(50, 0);
+    this->scene()->insert(bspline);
+}
 
-    p = {0.0, 3.0, 0.0};
-    points.push_back(p);
+void Scenario::bSplineLeastSquares()
+{
+    // B-spline constructor using least squares
+    auto circle = new GMlib::PCircle<float>(2.0);
+    circle->toggleDefaultVisualizer();
+    circle->sample(50, 0);
+    circle->setColor(GMcolor::green());
+    this->scene()->insert(circle);
 
-    p = {1.0, 2.0, 0.0};
-    points.push_back(p);
+    auto const m      = 30;
+    auto       points = GMlib::DVector<GMlib::Vector<float, 3>>(m);
+    auto       delta  = circle->getParDelta() / (m - 1);
 
-    p = {2.0, 3.0, 0.0};
-    points.push_back(p);
+    for (int i = 0; i < m; ++i) {
+        points[i] = circle->getPosition(circle->getParStart() + i * delta);
+    }
 
-    p = {2.0, 0.0, 0.0};
-    points.push_back(p);
+    auto bspline = new kwi::BSpline<float>(points, 4);
+    bspline->toggleDefaultVisualizer();
+    bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
+    bspline->sample(50, 0);
+    bspline->setColor(GMcolor::orangeRed());
+    bspline->translate(GMlib::Vector<float, 3>(0.1, 0.1, 0.0));
+    this->scene()->insert(bspline);
+}
 
-    p = {1.0, 1.0, 0.0};
-    points.push_back(p);
+void Scenario::closedSubDiv()
+{
+    GMlib::DVector<GMlib::Vector<float, 3>> points;
+    points.push_back(GMlib::Vector<float, 3>(0.0, 0.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(0.0, 3.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(1.0, 2.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(2.0, 3.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(2.0, 0.0, 0.0));
+    points.push_back(GMlib::Vector<float, 3>(1.0, 1.0, 0.0));
 
+    auto closed_curve = new kwi::PClosedSubDivCurve<float>(points, 2);
+    closed_curve->toggleDefaultVisualizer();
+    closed_curve->sample(2, 0);
+    this->scene()->insert(closed_curve);
+}
 
-    //// Create b-spline
-    // auto bspline = new kwi::BSpline<float>(points);
-    // bspline->toggleDefaultVisualizer();
-    // bspline->setMaterial(GMlib::GMmaterial::polishedGreen());
-    // bspline->sample(50, 0);
-    // this->scene()->insert(bspline);
+void Scenario::astroidCurve()
+{
+    auto astroid_curve = new kwi::PAstroidCurve<float>(2.0);
+    astroid_curve->toggleDefaultVisualizer();
+    astroid_curve->sample(30, 0);
+    this->scene()->insert(astroid_curve);
+}
 
-    // Use circle to approx points
-     //auto circle = new GMlib::PCircle<float>(2.0);
-     //circle->toggleDefaultVisualizer();
-     //circle->sample(50, 0);
-     //this->scene()->insert(circle);
+void Scenario::epitrochoidCurve()
+{
+    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
+    epitrochoid_curve->toggleDefaultVisualizer();
+    epitrochoid_curve->sample(600, 0);
+    this->scene()->insert(epitrochoid_curve);
+}
 
-    // auto const m     = 30;
-    // auto       p_2   = GMlib::DVector<GMlib::Vector<float, 3>>(m);
-    // auto       delta = circle->getParDelta() / (m - 1);
+void Scenario::nephroidCurve()
+{
+    auto nephroid = new kwi::PNephroidCurve<float>(1.5);
+    nephroid->toggleDefaultVisualizer();
+    nephroid->sample(100, 0);
+    this->scene()->insert(nephroid);
+}
 
-    // for (int i = 0; i < m; ++i) {
-    //     p_2[i] = circle->getPosition(circle->getParStart() + i * delta);
-    // }
-
-    // auto bspline2 = new kwi::BSpline<float>(p_2, 20);
-    // bspline2->toggleDefaultVisualizer();
-    // bspline2->setMaterial(GMlib::GMmaterial::polishedGreen());
-    // bspline2->sample(50, 0);
-    // this->scene()->insert(bspline2);
-
-
-    // DVector<Vector<float, 3>> p_3;
-    // auto closed_curve = new kwi::PClosedSubDivCurve<float>(points, 2);
-    // closed_curve->toggleDefaultVisualizer();
-    // closed_curve->sample(4, 0);
-    // this->scene()->insert(closed_curve);
-
-
-    // auto astroid_curve = new kwi::PAstroidCurve<float>(4.0);
-    // astroid_curve->toggleDefaultVisualizer();
-    // astroid_curve->sample(30, 0);
-    // this->scene()->insert(astroid_curve);
-
-    // auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0,
-    // 0.5, 6.0); epitrochoid_curve->toggleDefaultVisualizer();
+void Scenario::blendingSpline()
+{
+    auto epitrochoid_curve = new kwi::PEpitrochoidCurve<float>(10.0, 0.5, 6.0);
+    // epitrochoid_curve->toggleDefaultVisualizer();
     // epitrochoid_curve->sample(600, 0);
     // this->scene()->insert(epitrochoid_curve);
 
-    //auto nephroid = new kwi::PNephroidCurve<float>(0.5);
-    //nephroid->toggleDefaultVisualizer();
-    //nephroid->sample(600, 0);
-    // this->scene()->insert(nephroid);
+    auto blendingspline = new kwi::BlendingSpline<float>(epitrochoid_curve, 14);
+    blendingspline->toggleDefaultVisualizer();
+    blendingspline->sample(600, 0);
+    blendingspline->move(GMlib::Vector<float, 3>(0.0f, 40.0f, -40.0f));
+    this->scene()->insert(blendingspline);
+}
 
-    //auto blendingspline = new kwi::BlendingSpline<float>(nephroid, 4);
-    //blendingspline->toggleDefaultVisualizer();
-    //blendingspline->sample(100, 0);
-    //this->scene()->insert(blendingspline);
-    //blendingspline->translate(GMlib::Vector<float, 3>(5.0, 0.0, 0.0));
+void Scenario::blendingSplineSurface()
+{
+    auto torus      = new GMlib::PTorus<float>();
+    auto bs_surface = new kwi::BlendingSplineSurface<float>(torus, 8, 8);
+    bs_surface->toggleDefaultVisualizer();
 
-    auto torus = new TestTorus();
-    auto bs_surface = new kwi::BlendingSplineSurface<float>(torus, 4, 4);
+    // No. samples in u, v direction
+    // Derivatives at each sample
+    bs_surface->sample(40, 40, 1, 1);
+    this->scene()->insert(bs_surface);
 }
 
 void Scenario::cleanupScenario() {}
 
 void Scenario::callDefferedGL()
 {
-    // For some reason this does not replot objects properly
     GMlib::Array<const GMlib::SceneObject*> e_obj;
     this->scene()->getEditedObjects(e_obj);
     for (int i = 0; i < e_obj.getSize(); i++)
         //    if (e_obj(i)->isVisible())
         e_obj[i]->replot();
-
-    //  _femObject->replot();
 }
