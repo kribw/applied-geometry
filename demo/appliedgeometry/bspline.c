@@ -22,8 +22,7 @@ namespace kwi
     template <typename T>
     BSpline<T>::BSpline(const DVector<Vector<T, 3>>& p, int n)
     {
-        // n = control points
-        _c.setDim(n);
+        _c.setDim(n);                       // n = control points
         _d = 2;                             // degree should always be 2
         _k = _d + 1;                        // order
         create_knot_vector(n);              // generate knot vector
@@ -50,7 +49,7 @@ namespace kwi
     {
         // Set dim (derivatives + 1)
         this->_p.setDim(d + 1);
-
+        
         // Only compute position
         // dont need any derivatives
         T         x, y, z;
@@ -103,8 +102,8 @@ namespace kwi
                                       int                          n) const
     {
         // A = n * m
-        // m = p.getdim
-        // n = no. of splines
+        // m = p.getdim -> no. points
+        // n = no. of control points
         DMatrix<T> A(p.getDim(), n, T(0));
         const T    dt = getParDelta() / (p.getDim() - 1);
 

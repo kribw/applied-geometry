@@ -16,7 +16,6 @@ namespace kwi
         GM_SCENEOBJECT(PClosedSubDivCurve)
 
       public:
-        PClosedSubDivCurve();
         PClosedSubDivCurve(const DVector<Vector<T, 3>>& p, int d);
         virtual ~PClosedSubDivCurve();
 
@@ -33,10 +32,10 @@ namespace kwi
         T    getStartP() const override;
         T    getEndP() const override;
 
+      private:
         int                       _d;        // degree
         DVector<Vector<float, 3>> _points;   // points
 
-      private:
         void laneRiesenfeldClosed(std::vector<DVector<Vector<T, 3>>>& p, int k,
                                   int d) const;
         int  doublePart(std::vector<DVector<Vector<T, 3>>>& p, int n) const;

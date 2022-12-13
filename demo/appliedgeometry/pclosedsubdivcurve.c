@@ -9,8 +9,8 @@ namespace kwi
     PClosedSubDivCurve<T>::PClosedSubDivCurve(const DVector<Vector<T, 3>>& p,
                                               int                          d)
     {
-        _points = p;
-        _d      = d;
+        _points = p;   // initial points
+        _d      = d;   // degree
     }
 
     template <typename T>
@@ -32,12 +32,7 @@ namespace kwi
         // d = derivatives in each sample = 0
         _visu.resize(1);
         _checkSampleVal(depth, d);   // depth = m
-
         laneRiesenfeldClosed(this->_visu[0].sample_val, depth, d);
-        std::cout << "sample_val" << std::endl;
-        std::cout << this->_visu[0].sample_val << std::endl;
-        std::cout << "sample_val" << std::endl;
-
         this->setEditDone();
     }
 

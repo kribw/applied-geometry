@@ -37,6 +37,7 @@ namespace kwi
         bool isClosedU() const override;
         bool isClosedV() const override;
 
+      private:
         int                   _d;    // degree
         int                   _k;    // order
         std::vector<T>        _u;    // knot vector in u-direction
@@ -46,7 +47,6 @@ namespace kwi
         PSurf<T, 3>*          _ms;   // model surface
         DMatrix<PSurf<T, 3>*> _ls;   // local surfaces
 
-      private:
         void create_knot_vector(std::vector<T>& knot_vector, const int n,
                                 const bool is_closed, const T start,
                                 const T delta);

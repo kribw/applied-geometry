@@ -32,12 +32,12 @@ namespace kwi
         T    getStartP() const override;
         T    getEndP() const override;
 
+      private:
         int                       _d;   // dimension
         int                       _k;   // order
         DVector<Vector<float, 3>> _c;   // control points
         std::vector<T>            _t;   // knot vector
 
-      private:
         void create_knot_vector(const int n);
         T    get_w(const int d, const int i, const T t) const;
         int  get_i(const T t) const;

@@ -81,10 +81,8 @@ void Scenario::initializeScenario()
     // bSpline();
     // bSplineLeastSquares();
     // closedSubDiv();
-    // astroidCurve();
-    // epitrochoidCurve();
-    // nephroidCurve();
-    //blendingSpline();
+     //modelCurves();
+     //blendingSpline();
      blendingSplineSurface();
 }
 
@@ -150,6 +148,18 @@ void Scenario::closedSubDiv()
     closed_curve->toggleDefaultVisualizer();
     closed_curve->sample(2, 0);
     this->scene()->insert(closed_curve);
+
+    auto closed_curve2 = new kwi::PClosedSubDivCurve<float>(points, 2);
+    closed_curve2->toggleDefaultVisualizer();
+    closed_curve2->sample(3, 0);
+    closed_curve2->move(GMlib::Vector<float, 2>(3.0, 0.0));
+    this->scene()->insert(closed_curve2);
+}
+
+void Scenario::modelCurves() { 
+    astroidCurve(); 
+    nephroidCurve();
+    epitrochoidCurve();
 }
 
 void Scenario::astroidCurve()
@@ -157,6 +167,8 @@ void Scenario::astroidCurve()
     auto astroid_curve = new kwi::PAstroidCurve<float>(2.0);
     astroid_curve->toggleDefaultVisualizer();
     astroid_curve->sample(30, 0);
+    astroid_curve->move(GMlib::Vector<float, 2>(40.0, 0.0));
+    astroid_curve->setColor(GMcolor::green());
     this->scene()->insert(astroid_curve);
 }
 
@@ -173,6 +185,8 @@ void Scenario::nephroidCurve()
     auto nephroid = new kwi::PNephroidCurve<float>(1.5);
     nephroid->toggleDefaultVisualizer();
     nephroid->sample(100, 0);
+    nephroid->move(GMlib::Vector<float, 2>(30.0, 0.0));
+    nephroid->setColor(GMcolor::blue());
     this->scene()->insert(nephroid);
 }
 

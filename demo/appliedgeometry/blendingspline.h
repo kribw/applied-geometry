@@ -32,6 +32,7 @@ namespace kwi
         T    getStartP() const override;
         T    getEndP() const override;
 
+      private:
         int                        _d;    // degree
         int                        _k;    // order
         std::vector<T>             _t;    // knot vector
@@ -39,7 +40,6 @@ namespace kwi
         PCurve<T, 3>*              _mc;   // model curve
         std::vector<PCurve<T, 3>*> _lc;   // local curves
 
-      private:
         void create_knot_vector(const int n);
         void create_local_curves(const int n);
         T    get_w(const int d, const int i, const T t) const;

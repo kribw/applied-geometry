@@ -16,6 +16,7 @@ public:
   void bSpline();
   void bSplineLeastSquares();
   void closedSubDiv();
+  void modelCurves();
   void astroidCurve();
   void epitrochoidCurve();
   void nephroidCurve();
